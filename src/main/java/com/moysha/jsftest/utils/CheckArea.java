@@ -1,7 +1,11 @@
 package com.moysha.jsftest.utils;
 
+import jakarta.enterprise.context.SessionScoped;
 
-public class CheckArea {
+import java.io.Serializable;
+
+@SessionScoped
+public class CheckArea implements Serializable {
 
     public static boolean checkRectangle(double x, double y, double r) {
         return ((-r <= x)&&(x <= 0) && ((-r <= y) && (y<=0)));
