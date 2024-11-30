@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>JSF Coordinates App</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h:outputLabel for="x" value="X:"/>
+        <h:inputText id="x" value="#{pointsBean.x}"/><br/>
+
+        <h:outputLabel for="y" value="Y:"/>
+        <h:inputText id="y" value="#{pointsBean.y}"/><br/>
+
+        <h:outputLabel for="z" value="Z:"/>
+        <h:inputText id="z" value="#{pointsBean.r}"/><br/>
+
+        <h:commandButton value="Save" action="#{pointsBean.save}"/>
+    </h:form>
+</h:body>
+</html>
