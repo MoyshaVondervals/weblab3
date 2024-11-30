@@ -26,6 +26,5 @@ public class Points {
 
     @Column(nullable = false)
     private boolean status;
-
 }
 
