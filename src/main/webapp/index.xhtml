@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
+<!--
+  Created by IntelliJ IDEA.
+  User: moyshavondefvals
+  Date: 21.11.2024
+  Time: 10:57
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+
 <h:head>
-    <title>JSF Coordinates App</title>
+    <title>Title</title>
+    <h:outputStylesheet name="css/style.css"/>
+    <h:outputStylesheet name="css/fonts.css"/>
 </h:head>
-<h:body>
-    <h:form>
-        <h:outputLabel for="x" value="X:"/>
-        <h:inputText id="x" value="#{pointsBean.x}"/><br/>
 
-        <h:outputLabel for="y" value="Y:"/>
-        <h:inputText id="y" value="#{pointsBean.y}"/><br/>
+<body>
+<div class = "cap">
+    <h1 id = "cap">Покалюхин Илья Игоревич</h1>
+    <h2>Группа: P3210</h2>
+    <p>Вариант: 66704</p>
+</div>
+<div class="container">
+    <div id="clockBox">
+        <span id="hours" class = "clock">01</span>:<span id="minutes" class = "clock">00</span>:<span id="seconds" class = "clock">00</span>
+        <h:button value="Главная" styleClass="mybutton" outcome="/main.xhtml" id="go-to-main-button"/>
 
-        <h:outputLabel for="r" value="R:"/>
-        <h:inputText id="r" value="#{pointsBean.r}"/><br/>
 
-        <h:commandButton value="Save" action="#{pointsBean.save}"/>
-    </h:form>
-</h:body>
+
+    </div>
+</div>
+</body>
+<h:outputScript  name="js/script.js"/>
+
 </html>
