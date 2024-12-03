@@ -3,6 +3,7 @@ package com.moysha.jsftest.entity;
 
 
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,7 @@ public class Points implements Serializable {
     private double y;
 
     @Column(nullable = false)
-    private double r;
+    private double r = 1;
 
     @Column(nullable = false)
     private boolean status;

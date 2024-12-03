@@ -20,6 +20,8 @@
     <title>Main</title>
     <h:outputStylesheet name="css/style.css"/>
     <h:outputStylesheet name="css/fonts.css"/>
+    <h:outputScript library="js" name="graph.js"/>
+
 
 </h:head>
 
@@ -33,96 +35,76 @@
     <h:form id = "form">
         <div class="box-1">
             <h:panelGrid columns="1" style="margin-bottom: 10px">
-                <p:outputLabel for="input3" value="Значение X:"/>
-                <p:inputNumber id="input3" value="#{pointsBean.x}" minValue="-5"
+                <p:outputLabel for="inputX" value="Значение X:"/>
+                <p:inputNumber id="inputX" value="#{pointsBean.x}" minValue="-5"
                                maxValue="5" decimalPlaces="0" />
-                <p:slider for="input3" minValue="-5" maxValue="5" step="1"/>
+                <p:slider for="inputX" minValue="-5" maxValue="5" step="1"/>
             </h:panelGrid>
         </div>
         <div class="box-2">
             <p:outputLabel for="inputY" value="Введите значение: "/>
-
             <p:inputNumber id="inputY" minValue="-5"
                            maxValue="5" decimalPlaces="2"
                          value="#{pointsBean.y}"/>
         </div>
-
-        <div class="box-3" >
+        <div class="box-3">
             <h:panelGrid columns="1" style="margin-bottom: 10px">
                 <h:outputText id="outputR" value="Значение R: #{pointsBean.r}"/>
-                <h:inputHidden id="txtR" value="#{pointsBean.r}"/>
-                <p:slider for="txtR" display="outputR" style="width: 200px" minValue="1" maxValue="4" step="0.5"
-                          displayTemplate="Значение R: {value}"/>
-            </h:panelGrid>
-
+                <h:inputHidden id="inputR" value="#{pointsBean.r}"/>
+                <p:slider id="slider" for="inputR" display="outputR" style="width: 200px"
+                          minValue="1" maxValue="4" step="0.5"
+                          displayTemplate="Значение R: {value}"
+                          widgetVar="sliderWidget"
+                          onSlideEnd="setR(PF('sliderWidget').input.val());"
+                          />
+        </h:panelGrid>
+<!--            <p:remoteCommand name="savePoints" action="#{pointsBean.save()}" process="@form" />-->
         </div>
+
+
+
+
+
     </h:form>
 
 
-    <div class="box-4" id = "ImgBox">
-        <h:panelGroup layout="block">
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300">
-                    <!-- shapes-->
-                    <rect x="50" y="150" width="100" height="100" class="geometryShape"/>
-                    <polygon points="150,200 150,150 250,150" class="geometryShape" id = "tri"/>
-                    <path d="M50,150 A100,100 0 0,1 150,50 L150,150 Z" class="geometryShape" id = "circle"/>
 
-                    <!-- X axis -->
-                    <line stroke="black" x1="0" x2="300" y1="150" y2="150" />
-                    <line stroke="black" x1="290" x2="300" y1="145" y2="150" />
-                    <line stroke="black" x1="290" x2="300" y1="155" y2="150" />
-                    <text fill="black" x="288" y="140">X</text>
+    <div class="box-4" id = "ImgBox" onclick="svgMousePosition()">
+        <h:panelGroup layout="block" id = "blockId">
 
-                    <!-- Y axis -->
-                    <line stroke="black" x1="150" x2="150" y1="0" y2="300" />
-                    <line stroke="black" x1="150" x2="155" y1="0" y2="10" />
-                    <line stroke="black" x1="150" x2="145" y1="0" y2="10" />
-                    <text fill="black" x="160" y="12">Y</text>
-
-                    <!-- X points -->
-                    <line stroke="black" x1="50" x2="50" y1="153" y2="147" />
-                    <line stroke="black" x1="100" x2="100" y1="153" y2="147" />
-                    <line stroke="black" x1="200" x2="200" y1="153" y2="147" />
-                    <line stroke="black" x1="250" x2="250" y1="153" y2="147" />
-
-                    <!-- X points R-->
-                    <text fill="black" x="35" y="140" font-size="12">-R/2</text>
-                    <text fill="black" x="90" y="140" font-size="12">-R</text>
-                    <text fill="black" x="188" y="140" font-size="12">R/2</text>
-                    <text fill="black" x="245" y="140" font-size="12">R</text>
-
-                    <!-- Y points -->
-                    <line stroke="black" x1="147" x2="153" y1="50" y2="50" />
-                    <line stroke="black" x1="147" x2="153" y1="100" y2="100" />
-                    <line stroke="black" x1="147" x2="153" y1="200" y2="200" />
-                    <line stroke="black" x1="147" x2="153" y1="250" y2="250" />
-
-                    <!-- Y points R-->
-                    <text fill="black" x="160" y="55" font-size="12">R</text>
-                    <text fill="black" x="160" y="105" font-size="12">R/2</text>
-                    <text fill="black" x="160" y="205" font-size="12">-R/2</text>
-                    <text fill="black" x="160" y="255" font-size="12">-R</text>
-            </svg>
         </h:panelGroup>
     </div>
 
     <div id = "CheckField">
         <div class="box-5">
 
-            <p:commandButton ajax="true" value="Check" action="#{pointsBean.save()}" />
+            <p:commandButton class = "CheckButton" ajax="true" value="Check" action="#{pointsBean.save()}"  style="color: black"/>
+            <p:commandButton class = "CheckButton" ajax="true" value="Clear" action="#{pointsDAO.clear()}" style="color: black"/>
         </div>
 
         <div class = "box-6">
             <p>Первичная валидация данных</p>
-<!--            <p id = dialogWindow></p>-->
+            <p id = "dialogWindow"></p>
 <!--            <p id = "coords"></p>-->
         </div>
     </div>
     <div class = "box-7">
-<!--        <jsp:include page="Views/ResultTable.jsp"/>-->
+
     </div>
+    <div>
+        <h:form id = "hiddenForm">
+            <h:inputHidden id="hiddenX" value="#{pointsBean.x}" />-->
+            <h:inputHidden id="hiddenY" value="#{pointsBean.y}" />
+            <h:inputHidden id="hiddenR" value="#{pointsBean.r}" />
+            <p:remoteCommand name="savePoints" action="#{pointsBean.save()}" process="@form" />
+        </h:form>
+    </div>
+
 </div>
+    <p:remoteCommand name="updateDots" action="#{pointsDAO.updatePoints()}" process="@this" />
 
 </h:body>
+
+
 
 </html>

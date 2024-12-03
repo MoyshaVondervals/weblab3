@@ -19,9 +19,10 @@ body{
     background-size: 100%;
 
 }
-#CheckButton p, [id$="value"]{
+.CheckButton p, [id$="value"]{
     font-family: "Comfortaa", sans-serif;
 }
+
 
 .cap, .container{
     width: 100%;
@@ -83,8 +84,8 @@ body{
 
 
 .box-4 {
-    width: 300px;
-    height: 300px;
+    width: 380px;
+    height: 380px;
 
 }
 .box-5{
@@ -117,11 +118,11 @@ td {
     background-color: white;
 }
 
-#CheckButton:hover {
+.CheckButton:hover {
     background-color: #a5bdf8;
 }
 
-#CheckButton:active {
+.CheckButton:active {
     background-color: cornflowerblue;
 }
 
