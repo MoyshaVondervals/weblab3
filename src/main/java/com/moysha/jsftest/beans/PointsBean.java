@@ -1,18 +1,12 @@
 package com.moysha.jsftest.beans;
 
-
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.moysha.jsftest.dao.PointsDAO;
 import com.moysha.jsftest.entity.Points;
 import com.moysha.jsftest.utils.CheckArea;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
-import jakarta.json.bind.annotation.JsonbProperty;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.io.Serializable;
 
 @Getter

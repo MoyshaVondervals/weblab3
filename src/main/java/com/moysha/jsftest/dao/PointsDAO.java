@@ -1,17 +1,12 @@
 package com.moysha.jsftest.dao;
 
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.moysha.jsftest.entity.Points;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 import org.primefaces.PrimeFaces;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.Serializable;
-import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 @Named

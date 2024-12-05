@@ -6,9 +6,7 @@ function setR(Rvalue){
     R = Rvalue;
     updateScale(R);
 }
-function getR() {
-    return R;
-}
+
 
 function updateScale(Rvalue) {
     console.log(Rvalue);
