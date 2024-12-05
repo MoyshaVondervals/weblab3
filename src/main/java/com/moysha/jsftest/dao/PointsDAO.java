@@ -4,6 +4,7 @@ import com.moysha.jsftest.entity.Points;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import org.primefaces.PrimeFaces;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.Serializable;
@@ -12,27 +13,26 @@ import java.util.List;
 @Named
 @SessionScoped
 public class PointsDAO implements Serializable {
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("d");
-    public void savePoints(Points points) {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        em.persist(points);
-        em.getTransaction().commit();
-        em.close();
-        updatePoints();
-    }
+    @PersistenceContext
 
-    public void clear() {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        em.clear();
-        em.getTransaction().commit();
-        em.close();
+    EntityManager em;
+    @Transactional
+    public void savePoints(Points points) {
+
+        em.persist(points);
+
         updatePoints();
     }
+    @Transactional
+    public void clear() {
+
+        em.createQuery("delete from Points");
+
+        updatePoints();
+    }
+    @Transactional
     public void updatePoints(){
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
+
         List<Points> pointsArrayList = em.createQuery("select points from Points points ORDER BY points.id DESC", Points.class).setMaxResults(10).getResultList();
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -42,8 +42,7 @@ public class PointsDAO implements Serializable {
         }catch (Exception e){
             e.printStackTrace();
         }
-        em.getTransaction().commit();
-        em.close();
+
     }
 
 }
