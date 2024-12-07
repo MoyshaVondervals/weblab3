@@ -78,7 +78,7 @@
     <div id = "CheckField">
         <div class="box-5">
 
-            <p:commandButton class = "CheckButton" ajax="true" value="Check" action="#{pointsBean.save()}"  style="color: black"/>
+            <p:commandButton class = "CheckButton" ajax="true" value="Check" action="#{pointsBean.save()}" update = "pointsTable" style="color: black"/>
             <p:commandButton class = "CheckButton" ajax="true" value="Clear" action="#{pointsDAO.clear()}" style="color: black"/>
         </div>
 
@@ -89,20 +89,38 @@
         </div>
     </div>
     <div class = "box-7">
+        <p:dataTable var="p" value="#{pointsDAO.pointsArrayList}" id ="pointsTable">
+            <p:column headerText="X">
+                <h:outputText value="#{p.x}" />
+            </p:column>
+
+            <p:column headerText="Y">
+                <h:outputText value="#{p.y}" />
+            </p:column>
+
+            <p:column headerText="R">
+                <h:outputText value="#{p.r}" />
+            </p:column>
+
+            <p:column headerText="Status">
+                <h:outputText value="#{p.status}" />
+            </p:column>
+        </p:dataTable>
+        <p:remoteCommand name="updateTable" update="pointsTable" process ="@this" />
+
 
     </div>
     <div>
         <h:form id = "hiddenForm">
-            <h:inputHidden id="hiddenX" value="#{pointsBean.x}" />-->
+            <h:inputHidden id="hiddenX" value="#{pointsBean.x}" />
             <h:inputHidden id="hiddenY" value="#{pointsBean.y}" />
             <h:inputHidden id="hiddenR" value="#{pointsBean.r}" />
-            <p:remoteCommand name="savePoints" action="#{pointsBean.save()}" process="@form" />
+            <p:remoteCommand name="savePoints" action="#{pointsBean.save()}" update="pointsTable" process="@form" />
         </h:form>
     </div>
 
 </div>
-    <p:remoteCommand name="updateDots" action="#{pointsDAO.updatePoints()}" process="@this" />
-
+    <p:remoteCommand name="updateDots" action="#{pointsDAO.updatePoints()}" update="pointsTable" process="@this" />
 </h:body>
 
 

@@ -5,6 +5,7 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
+import lombok.Getter;
 import org.primefaces.PrimeFaces;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.Serializable;
@@ -13,9 +14,14 @@ import java.util.List;
 @Named
 @SessionScoped
 public class PointsDAO implements Serializable {
-    @PersistenceContext
 
+    @Getter
+    private List<Points> pointsArrayList;
+
+    @PersistenceContext
     EntityManager em;
+
+
     @Transactional
     public void savePoints(Points points) {
 
@@ -33,7 +39,7 @@ public class PointsDAO implements Serializable {
     @Transactional
     public void updatePoints(){
 
-        List<Points> pointsArrayList = em.createQuery("select points from Points points ORDER BY points.id DESC", Points.class).setMaxResults(10).getResultList();
+        pointsArrayList = em.createQuery("select points from Points points ORDER BY points.id DESC", Points.class).setMaxResults(10).getResultList();
         try {
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(pointsArrayList);
@@ -44,5 +50,6 @@ public class PointsDAO implements Serializable {
         }
 
     }
+    public void dn(){};
 
 }

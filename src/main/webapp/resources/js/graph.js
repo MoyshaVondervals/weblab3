@@ -84,9 +84,6 @@ function svgMousePosition() {
 }
 function drawDots(data) {
     console.log("Полученные данные:", data);
-
-
-
     // Проверяем, что данные — это массив
     const points = typeof data === "string" ? JSON.parse(data) : data;
 
@@ -114,6 +111,7 @@ function drawDots(data) {
         svg.appendChild(circle);
     });
     console.log("####################################################################################################")
+    updateTable();
 }
 function colorSetter(status){
     if (status){
