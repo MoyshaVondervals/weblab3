@@ -79,7 +79,7 @@
         <div class="box-5">
 
             <p:commandButton class = "CheckButton" ajax="true" value="Check" action="#{pointsBean.save()}" update = "pointsTable" style="color: black"/>
-            <p:commandButton class = "CheckButton" ajax="true" value="Clear" action="#{pointsDAO.clear()}" style="color: black"/>
+            <p:commandButton class = "CheckButton" ajax="true" value="Clear" action="#{pointsRep.clear()}" style="color: black"/>
         </div>
 
         <div class = "box-6">
@@ -89,7 +89,7 @@
         </div>
     </div>
     <div class = "box-7">
-        <p:dataTable var="p" value="#{pointsDAO.pointsArrayList}" id ="pointsTable">
+        <p:dataTable var="p" value="#{pointsRep.pointsArrayList}" id ="pointsTable">
             <p:column headerText="X">
                 <h:outputText value="#{p.x}" />
             </p:column>
@@ -120,7 +120,7 @@
     </div>
 
 </div>
-    <p:remoteCommand name="updateDots" action="#{pointsDAO.updatePoints()}" update="pointsTable" process="@this" />
+    <p:remoteCommand name="updateDots" action="#{pointsRep.updatePoints()}" update="pointsTable" process="@this" />
 </h:body>
 
 

@@ -1,6 +1,6 @@
 package com.moysha.jsftest.beans;
 
-import com.moysha.jsftest.dao.PointsDAO;
+import com.moysha.jsftest.dao.PointsRep;
 import com.moysha.jsftest.entity.Points;
 import com.moysha.jsftest.utils.CheckArea;
 import jakarta.enterprise.context.SessionScoped;
@@ -16,7 +16,7 @@ import java.io.Serializable;
 @SessionScoped
 public class PointsBean implements Serializable {
     @Inject
-    PointsDAO dao;
+    PointsRep dao;
 
     private double x;
     private double y;

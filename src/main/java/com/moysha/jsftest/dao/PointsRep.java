@@ -13,7 +13,7 @@ import java.util.List;
 
 @Named
 @SessionScoped
-public class PointsDAO implements Serializable {
+public class PointsRep implements Serializable {
 
     @Getter
     private List<Points> pointsArrayList;
