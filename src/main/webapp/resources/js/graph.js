@@ -5,8 +5,8 @@ let R;
 function setR(Rvalue){
     R = Rvalue;
     updateScale(R);
-}
 
+}
 
 function updateScale(Rvalue) {
     console.log(Rvalue);
@@ -53,6 +53,7 @@ function updateScale(Rvalue) {
             <text fill="black" x="190" y=${180+15*Rvalue} font-size="8">-R/2</text>
             <text fill="black" x="190" y=${180+30*Rvalue} font-size="8">-R</text>
         </svg>`;
+
     updateDots();
 
 }
@@ -80,38 +81,24 @@ function svgMousePosition() {
 
         savePoints();
 
+
     });
 }
-function drawDots(data) {
+function parseDots(data) {
+
     console.log("Полученные данные:", data);
-    // Проверяем, что данные — это массив
     const points = typeof data === "string" ? JSON.parse(data) : data;
 
     if (!Array.isArray(points)) {
         console.error("Ошибка: данные не являются массивом.", points);
         return;
     }
+    points.forEach((points) => {
+        drawDot(points)
 
-    // Далее ваш существующий код
-    const svg = document.getElementById("svgId");
-    svg.querySelectorAll("circle").forEach((circle) => circle.remove());
-
-    points.forEach((point) => {
-        console.log(`x=${point.x}, y=${point.y}`);
-        let x = (point.x * 100 * (30)) / 100 + 180
-        let y = (-1 * point.y * 100 * (30)) / 100 + 180
-        console.log(`###x=${x}, ###y=${y}`);
-        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        circle.setAttribute("cx", x);
-        circle.setAttribute("cy", y);
-        circle.setAttribute("r", 5);
-        circle.setAttribute("fill", colorSetter(point.status));
-        circle.setAttribute("stroke", "black");
-        circle.setAttribute("stroke-width", "1");
-        svg.appendChild(circle);
     });
     console.log("####################################################################################################")
-    updateTable();
+
 }
 function colorSetter(status){
     if (status){
@@ -120,3 +107,23 @@ function colorSetter(status){
         return "red"
     }
 }
+function drawDot(point){
+
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    const svg = document.getElementById("svgId");
+    console.log(`x=${point.x}, y=${point.y}`);
+    let x = (point.x * 100 * (30)) / 100 + 180
+    let y = (-1 * point.y * 100 * (30)) / 100 + 180
+    console.log(`###x=${x}, ###y=${y}`);
+
+    circle.setAttribute("cx", x);
+    circle.setAttribute("cy", y);
+    circle.setAttribute("r", 5);
+    circle.setAttribute("fill", colorSetter(point.status));
+    circle.setAttribute("stroke", "black");
+    circle.setAttribute("stroke-width", "1");
+    svg.appendChild(circle);
+
+}
+
+

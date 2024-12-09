@@ -4,11 +4,15 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Session;
+
 import java.io.Serializable;
 
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "points")
 @SessionScoped
 public class Points implements Serializable {
@@ -27,5 +31,8 @@ public class Points implements Serializable {
 
     @Column(nullable = false)
     private boolean status;
+
+    @Column(nullable = false)
+    private String sessionId;
 }
 

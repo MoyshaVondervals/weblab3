@@ -79,17 +79,13 @@
         <div class="box-5">
 
             <p:commandButton class = "CheckButton" ajax="true" value="Check" action="#{pointsBean.save()}" update = "pointsTable" style="color: black"/>
-            <p:commandButton class = "CheckButton" ajax="true" value="Clear" action="#{pointsRep.clear()}" style="color: black"/>
+            <p:commandButton class = "CheckButton" ajax="true" value="Clear" action="#{pointsRepository.clear()}" style="color: black"/>
         </div>
 
-        <div class = "box-6">
-            <p>Первичная валидация данных</p>
-            <p id = "dialogWindow"></p>
-<!--            <p id = "coords"></p>-->
-        </div>
+
     </div>
     <div class = "box-7">
-        <p:dataTable var="p" value="#{pointsRep.pointsArrayList}" id ="pointsTable">
+        <p:dataTable var="p" value="#{pointsRepository.pointsArrayList}" id ="pointsTable">
             <p:column headerText="X">
                 <h:outputText value="#{p.x}" />
             </p:column>
@@ -109,6 +105,7 @@
         <p:remoteCommand name="updateTable" update="pointsTable" process ="@this" />
 
 
+
     </div>
     <div>
         <h:form id = "hiddenForm">
@@ -120,7 +117,11 @@
     </div>
 
 </div>
-    <p:remoteCommand name="updateDots" action="#{pointsRep.updatePoints()}" update="pointsTable" process="@this" />
+    <p:remoteCommand name="updateDots" action="#{pointsRepository.updatePoints()}" update="pointsTable" process="@this" />
+
+
+
+
 </h:body>
 
 

@@ -1,41 +1,43 @@
-#services:
-#  db:
-#    image: postgres:latest
-#    restart: always
-#    expose:
-#      - "5432"
-#    ports:
-#      - "5432:5432"
-#    environment:
-#      POSTGRES_PASSWORD: postgres
-#      POSTGRES_USER: postgres
-#      POSTGRES_DB: postgres_webapp
-#      PGDATA: /data/postgres
-#    volumes:
-#      - ./data:/data/postgres
-#volumes:
-#  db:
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
-
   db:
-    image: postgres:15
-    container_name: postgres_container
-    environment:
-      POSTGRES_DB: postgres_webapp
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+    image: postgres:latest
+    restart: always
+    expose:
+      - "5432"
     ports:
       - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres_webapp
+      PGDATA: /data/postgres
     volumes:
-      - db_data:/var/lib/postgresql/data
-
+      - ./data:/data/postgres
 volumes:
-  db_data:
+  db:
+
+
+#services:
+#  app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
+#
+#  db:
+#    image: postgres:15
+#    container_name: postgres_container
+#    environment:
+#      POSTGRES_DB: postgres_webapp
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - db_data:/var/lib/postgresql/data
+#
+#volumes:
+#  db_data:

@@ -1,9 +1,10 @@
 package com.moysha.jsftest.beans;
 
-import com.moysha.jsftest.dao.PointsRep;
+import com.moysha.jsftest.dao.PointsRepository;
 import com.moysha.jsftest.entity.Points;
 import com.moysha.jsftest.utils.CheckArea;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import java.io.Serializable;
 @SessionScoped
 public class PointsBean implements Serializable {
     @Inject
-    PointsRep dao;
+    PointsRepository dao;
 
     private double x;
     private double y;
@@ -28,10 +29,15 @@ public class PointsBean implements Serializable {
         points.setY(y);
         points.setR(r);
         points.setStatus(CheckArea.checkArea(x, y, r));
+        points.setSessionId(getSessionId());
 
 
 
         dao.savePoints(points);
+    }
+    public String getSessionId() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        return context.getExternalContext().getSessionId(false);
     }
 
 }
