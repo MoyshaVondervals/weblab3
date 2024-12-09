@@ -22,31 +22,25 @@ public class PointsRepository implements Serializable {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("d");
 
+
     public void savePoints(Points points) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.persist(points);
 
-        updatePoints();
+//        drawDots(points);
         em.getTransaction().commit();
         em.close();
-
+        updatePoints();
 
     }
-//    public void clear() {
-//        EntityManager em = emf.createEntityManager();
-//        em.getTransaction().begin();
-//        em.createQuery("delete from Points points where points.sessionId = :sid").setParameter("sid", getSessionId()).executeUpdate();
-//        PrimeFaces.current().executeScript("clearDots();");
-//        em.getTransaction().commit();
-//        em.close();
-//
-//    }
+
     public void updatePoints(){
         System.err.println("aboba");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         pointsArrayList = em.createQuery("select points from Points points WHERE points.sessionId = :sid ORDER BY points.id DESC", Points.class).setParameter("sid", getSessionId()).setMaxResults(10).getResultList();
+
         drawDots(pointsArrayList);
         em.getTransaction().commit();
         em.close();
@@ -66,8 +60,4 @@ public class PointsRepository implements Serializable {
             e.printStackTrace();
         }
     }
-
-
-
-
 }

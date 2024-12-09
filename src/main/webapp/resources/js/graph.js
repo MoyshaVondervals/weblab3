@@ -62,7 +62,6 @@ function svgMousePosition() {
     let c = 0;
 
     const imgBox = document.getElementById("ImgBox");
-    // Убедимся, что старые слушатели не мешают
     imgBox.onclick = null;
 
     imgBox.addEventListener("click", function (event) {
@@ -85,12 +84,11 @@ function svgMousePosition() {
     });
 }
 function parseDots(data) {
-
     console.log("Полученные данные:", data);
     const points = typeof data === "string" ? JSON.parse(data) : data;
 
     if (!Array.isArray(points)) {
-        console.error("Ошибка: данные не являются массивом.", points);
+        console.log("Error")
         return;
     }
     points.forEach((points) => {
@@ -111,6 +109,7 @@ function drawDot(point){
 
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     const svg = document.getElementById("svgId");
+    svg.querySelectorAll("circle").forEach((circle) => circle.remove());
     console.log(`x=${point.x}, y=${point.y}`);
     let x = (point.x * 100 * (30)) / 100 + 180
     let y = (-1 * point.y * 100 * (30)) / 100 + 180
@@ -124,6 +123,7 @@ function drawDot(point){
     circle.setAttribute("stroke-width", "1");
     svg.appendChild(circle);
 
+    updateDots();
 }
 
 
