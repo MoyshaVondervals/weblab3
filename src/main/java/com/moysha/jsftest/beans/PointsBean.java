@@ -10,6 +10,7 @@ import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import java.io.Serializable;
+import java.sql.SQLException;
 
 @Getter
 @Setter
@@ -32,8 +33,11 @@ public class PointsBean implements Serializable {
         points.setSessionId(getSessionId());
 
 
-
-        dao.savePoints(points);
+        try {
+            dao.savePoints(points);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     public String getSessionId() {
         FacesContext context = FacesContext.getCurrentInstance();

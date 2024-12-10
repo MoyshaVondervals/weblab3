@@ -11,9 +11,9 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@Entity
+//@Entity
 @ToString
-@Table(name = "points")
+//@Table(name = "points")
 @SessionScoped
 public class Points implements Serializable {
     @Id

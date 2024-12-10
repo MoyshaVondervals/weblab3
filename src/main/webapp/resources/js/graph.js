@@ -109,7 +109,6 @@ function drawDot(point){
 
     const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     const svg = document.getElementById("svgId");
-    svg.querySelectorAll("circle").forEach((circle) => circle.remove());
     console.log(`x=${point.x}, y=${point.y}`);
     let x = (point.x * 100 * (30)) / 100 + 180
     let y = (-1 * point.y * 100 * (30)) / 100 + 180
@@ -122,8 +121,6 @@ function drawDot(point){
     circle.setAttribute("stroke", "black");
     circle.setAttribute("stroke-width", "1");
     svg.appendChild(circle);
-
-    updateDots();
 }
 
 

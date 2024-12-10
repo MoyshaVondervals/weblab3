@@ -4,48 +4,84 @@ import com.moysha.jsftest.entity.Points;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
-import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 import lombok.Getter;
 import org.primefaces.PrimeFaces;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+
 import java.io.Serializable;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 
+@Getter
 @Named
 @SessionScoped
 public class PointsRepository implements Serializable {
 
-    @Getter
     private List<Points> pointsArrayList;
+    java.sql.Connection conn;
 
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("d");
+    {
+        try {
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres_webapp", "postgres", "postgres");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public void savePoints(Points points) throws SQLException {
 
-    public void savePoints(Points points) {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        em.persist(points);
-
-//        drawDots(points);
-        em.getTransaction().commit();
-        em.close();
+        PreparedStatement addObjStatement = conn.prepareStatement("INSERT INTO points (id, x, y, r, status, sessionid)VALUES (?, ?, ?, ?, ?, ?)");
+        addObjStatement.setLong(1, (ThreadLocalRandom.current().nextLong(Long.MAX_VALUE)));
+        addObjStatement.setDouble(2, points.getX());
+        addObjStatement.setDouble(3, points.getY());
+        addObjStatement.setDouble(4, points.getR());
+        addObjStatement.setBoolean(5, points.isStatus());
+        addObjStatement.setString(6, points.getSessionId());
+        addObjStatement.executeUpdate();
         updatePoints();
 
     }
 
-    public void updatePoints(){
-        System.err.println("aboba");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        pointsArrayList = em.createQuery("select points from Points points WHERE points.sessionId = :sid ORDER BY points.id DESC", Points.class).setParameter("sid", getSessionId()).setMaxResults(10).getResultList();
 
+    public void updatePoints() {
+        try {
+            pointsArrayList = loadPointsFromDb();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
         drawDots(pointsArrayList);
-        em.getTransaction().commit();
-        em.close();
+}
+    private List<Points> loadPointsFromDb() throws SQLException {
 
+
+
+        List<Points> list = new ArrayList<>();
+        String sql = "SELECT id, x, y, r, status, sessionid FROM points WHERE sessionid = ? ORDER BY id DESC limit 10";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, getSessionId());
+        ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    Points p = new Points();
+                    p.setId(rs.getLong("id"));
+                    p.setX(rs.getDouble("x"));
+                    p.setY(rs.getDouble("y"));
+                    p.setR(rs.getDouble("r"));
+                    p.setStatus(rs.getBoolean("status"));
+                    p.setSessionId(rs.getString("sessionid"));
+                    list.add(p);
+                }
+
+
+
+        return list;
     }
+
+
     public String getSessionId() {
         FacesContext context = FacesContext.getCurrentInstance();
         return context.getExternalContext().getSessionId(false);
