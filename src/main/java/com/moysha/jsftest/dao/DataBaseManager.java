@@ -11,7 +11,6 @@ public class DataBaseManager {
     private static final String PASSWORD = "postgres";
     private static Connection connection;
 
-    // Статический метод для получения соединения
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             try {
