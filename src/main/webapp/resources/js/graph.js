@@ -85,14 +85,30 @@ function svgMousePosition() {
 }
 function parseDots(data) {
     console.log("Полученные данные:", data);
+    const svg = document.getElementById("svgId");
+    svg.querySelectorAll("circle").forEach((circle) => circle.remove());
     const points = typeof data === "string" ? JSON.parse(data) : data;
 
     if (!Array.isArray(points)) {
         console.log("Error")
         return;
     }
+
+
     points.forEach((points) => {
-        drawDot(points)
+
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        let x = (points.x * 100 * (30)) / 100 + 180
+        let y = (-1 * points.y * 100 * (30)) / 100 + 180
+        console.log(`###x=${x}, ###y=${y}`);
+
+        circle.setAttribute("cx", x);
+        circle.setAttribute("cy", y);
+        circle.setAttribute("r", 5);
+        circle.setAttribute("fill", colorSetter(points.status));
+        circle.setAttribute("stroke", "black");
+        circle.setAttribute("stroke-width", "1");
+        svg.appendChild(circle);
 
     });
     console.log("####################################################################################################")
@@ -104,23 +120,6 @@ function colorSetter(status){
     }else {
         return "red"
     }
-}
-function drawDot(point){
-
-    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    const svg = document.getElementById("svgId");
-    console.log(`x=${point.x}, y=${point.y}`);
-    let x = (point.x * 100 * (30)) / 100 + 180
-    let y = (-1 * point.y * 100 * (30)) / 100 + 180
-    console.log(`###x=${x}, ###y=${y}`);
-
-    circle.setAttribute("cx", x);
-    circle.setAttribute("cy", y);
-    circle.setAttribute("r", 5);
-    circle.setAttribute("fill", colorSetter(point.status));
-    circle.setAttribute("stroke", "black");
-    circle.setAttribute("stroke-width", "1");
-    svg.appendChild(circle);
 }
 
 
