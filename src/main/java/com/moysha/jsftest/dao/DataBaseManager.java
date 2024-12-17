@@ -11,7 +11,7 @@ public class DataBaseManager {
     private static final String PASSWORD = "postgres";
     private static Connection connection;
 
-    public static Connection getConnection() throws SQLException {
+    public synchronized Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             try {
                 connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
